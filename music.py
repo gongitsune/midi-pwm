@@ -10,7 +10,11 @@ class MyMidi:
     all_msg: "dict[int, list[list[Message]]]" = {}
 
     def __init__(self, path: str) -> None:
-        self.midi = mido.MidiFile(path)
+        try:
+            self.midi = mido.MidiFile(path)
+        except FileNotFoundError as e:
+            print(f"File not found -> {e.filename}")
+
         self.track_size = len(self.midi.tracks)
         self.analysis()
 
