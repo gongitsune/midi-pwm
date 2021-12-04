@@ -43,26 +43,31 @@ class MyMidi:
             pi.set_mode(pin, pigpio.OUTPUT)
 
         # Play
-        elapsed = 0
-        for my_track in self.all_msg.items():
-            # Wait
-            print((my_track[0] - elapsed) * 0.0021)
-            time.sleep((my_track[0] - elapsed) * 0.0021)
-            elapsed = my_track[0]
+        try:
+            elapsed = 0
+            for my_track in sorted(self.all_msg.items()):
+                # Wait
+                time.sleep((my_track[0] - elapsed) * 0.0021 * 0.4)
+                elapsed = my_track[0]
 
-            for (track_num, msgs) in enumerate(my_track[1]):
-                if not msgs:
-                    continue
-                elif track_num in play_tracks.keys():
-                    for msg in msgs:
-                        duty = 50 if msg.type == "note_on" else 0
-                        pi.hardware_PWM(
-                            play_tracks[track_num],
-                            round(pow(2, (msg.note - 69) / 12) * 440),
-                            duty * 10000,
-                        )
+                for (track_num, msgs) in enumerate(my_track[1]):
+                    if not msgs:
+                        continue
+                    elif track_num in play_tracks.keys():
+                        for msg in msgs:
+                            duty = 50 if msg.type == "note_on" else 0
+                            pi.hardware_PWM(
+                                play_tracks[track_num],
+                                round(pow(2, (msg.note - 69) / 12) * 440),
+                                duty * 10000,
+                            )
+        finally:
+            for pin in play_tracks.values():
+                pi.set_mode(pin, pigpio.INPUT)
+            pi.stop()
 
 
 if __name__ == "__main__":
     music = MyMidi("./sound/awa_double.mid")
-    music.play()
+
+    music.play({2: 12, 3: 13})
