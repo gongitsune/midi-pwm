@@ -30,6 +30,8 @@ Example
 python main.py example_song.mid 1 2
 ```
 
+![circuit diagram](./pizero-midi-pwm.png)
+
 # Note
 Don't forget to run the pigpiod.
 Make sure pigpiod runs at boot time if needed.
