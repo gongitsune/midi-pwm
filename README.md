@@ -21,7 +21,7 @@ sudo pigpiod
 git clone https://github.com/gongitsune/midi-pwm.git
 
 cd midi-pwm
-python main.py (midi file path) (...play tracks number)
+python main.py (midi file path) (first track num) (second track num)
 ```
 
 # Note
