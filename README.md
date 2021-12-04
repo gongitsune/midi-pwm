@@ -28,5 +28,7 @@ python main.py (midi file path) (...play tracks number)
 Don't forget to run the pigpiod.
 Make sure pigpiod runs at boot time if needed.
 
+Use the hardware pwm on the raspberrypi. The pins used are gpio 12, 13.
+
 # License
 "midi-pwm" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
